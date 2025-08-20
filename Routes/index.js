@@ -6,7 +6,7 @@ const apiRouter = require('./Api/Index');
 router.use('/api/v1', apiRouter);
 
 // ✅ Health check / backend test route
-router.get('/api/v1', (req, res) => {
+router.get('/', (req, res) => {
   res.json({
     status: 'ok',
     message: '✅ SwiftShip backend is working!',
