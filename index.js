@@ -57,7 +57,13 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use(router);
+// ✅ Health check route for backend
+app.get('/api/v1', (req, res) => {
+  res.json({ status: 'ok', message: '✅ SwiftShip backend is working!' });
+});
+
+// ✅ Mount all API routes under /api/v1
+app.use('/api/v1', router);
 
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
