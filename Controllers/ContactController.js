@@ -2,7 +2,7 @@ const contactSchema = require('../models/contactSchema');
 const sendMail = require('../Utils/mail');
 const sanitizeInput = require('../Utils/sanitizeInput');
 const { contactMailTemplate } = require('../Utils/template');
-const { isValidEmail } = require('../Utils/Validators');
+const { isValidEmail } = require('../Utils/validators');
 
 // -------------------- SEND MESSAGE --------------------
 const sendMessage = async (req, res) => {
