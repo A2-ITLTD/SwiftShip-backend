@@ -3,7 +3,7 @@ const router = express.Router();
 const apiRouter = require('./Api/Index');
 
 // ✅ Mount all API routes under /api/v1
-router.use('/api/v1', apiRouter);
+router.use('api/v1', apiRouter);
 
 // ✅ Health check / backend test route
 router.get('/', (req, res) => {
