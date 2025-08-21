@@ -28,7 +28,7 @@ const port = process.env.PORT || 3000;
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin:'https://swiftship-70l3.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
@@ -56,7 +56,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+
+
+
 app.use(router);
 
 const distPath = path.join(__dirname, 'dist');

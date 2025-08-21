@@ -7,7 +7,7 @@ const {
   resetPassTemplate,
   otpTemplate,
 } = require('../Utils/template');
-const { isValidEmail, isPasswordValid } = require('../Utils/Validators');
+const { isValidEmail, isPasswordValid } = require('../Utils/validators');
 const jwt = require('jsonwebtoken');
 // const fs = require('fs');
 const orderSchema = require('../models/orderSchema');
