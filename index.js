@@ -21,7 +21,7 @@ dbConfig();
 // App setup
 // --------------------
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // --------------------
 // Security & performance middlewares
@@ -54,15 +54,15 @@ app.use((req, res, next) => {
 // --------------------
 // CORS configuration
 // --------------------
-const allowedOrigins = [
-  'https://swiftship-ac10.onrender.com', // your current frontend
-  'https://swiftship-70l3.onrender.com', // old/other frontend
-];
+// Read allowed origins from env
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow non-browser requests
+      if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
         return callback(new Error(msg), false);
@@ -79,16 +79,16 @@ app.use(
 // --------------------
 app.use(router);
 
-// // --------------------
-// // Serve frontend build
-// // --------------------
-// const distPath = path.join(__dirname, 'dist');
-// app.use(express.static(distPath));
+// --------------------
+// Serve frontend build
+// --------------------
+const distPath = path.join(__dirname, 'dist');
+app.use(express.static(distPath));
 
-// // Fallback to index.html for frontend routing
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(distPath, 'index.html'));
-// });
+// Fallback for React Router
+app.get('/', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
 
 // --------------------
 // Create HTTP + Socket.IO server
