@@ -3,7 +3,6 @@ const express = require('express');
 const dbConfig = require('./Config/Db');
 const http = require('http');
 const { Server } = require('socket.io');
-const router = require('./Routes');
 const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
@@ -12,6 +11,7 @@ const winston = require('winston');
 const cors = require('cors');
 const path = require('path');
 const logger = require('./Config/logger');
+const router = require('./Routes');
 
 // --------------------
 // Connect to database
@@ -56,6 +56,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(router);
+
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
 
@@ -82,8 +84,6 @@ io.on('connection', (socket) => {
     logger.info(`❌ User disconnected: ${socket.id}`);
   });
 });
-
-app.use(router);
 
 // --------------------
 // Start server
