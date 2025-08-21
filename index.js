@@ -66,11 +66,6 @@ app.use(router);
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
 
-// Catch-all for SPA (client-side routing)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
-
 // --------------------
 // Create HTTP + Socket.IO server
 // --------------------
