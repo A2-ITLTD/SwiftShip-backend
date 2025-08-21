@@ -130,7 +130,7 @@ const orderNotificationEmail = ({
             <tr>
               <td style="padding-bottom: 20px; color: #333333; font-size: 16px; line-height: 1.5;">
                 <p>Hello,</p>
-                <p>We're happy to let you know that your order <strong>#${orderId}</strong> for the product <strong>${productName}</strong> was successfully placed on <strong>${purchaseDate}</strong>.</p>
+                <p>We're happy to let you know that your order <strong>${orderId}</strong> for the product <strong>${productName}</strong> was successfully placed on <strong>${purchaseDate}</strong>.</p>
                 <p>You can track the status of your shipment by clicking the button below:</p>
               </td>
             </tr>
