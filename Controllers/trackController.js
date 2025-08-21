@@ -5,6 +5,13 @@ const sanitizeInput = require('../Utils/sanitizeInput');
 // -------------------- GET TRACKING NUMBER --------------------
 const getTrackingNumber = async (req, res) => {
   try {
+    // ------------------ CHECK LOGIN ------------------
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ success: false, error: 'Please login to track your parcel' });
+    }
+
     let { orderId } = req.body;
 
     // ------------------ SANITIZE INPUT ------------------
@@ -16,10 +23,7 @@ const getTrackingNumber = async (req, res) => {
     }
 
     // ------------------ BUILD QUERY ------------------
-    const query =
-      req.user?.role === 'user'
-        ? { orderId, userId: req.user.id }
-        : { orderId };
+    const query = { orderId, userId: req.user.id }; 
 
     // ------------------ FETCH ORDER ------------------
     const order = await orderSchema.findOne(query);
@@ -57,6 +61,7 @@ const getTrackingNumber = async (req, res) => {
       .json({ success: false, error: 'Internal server error' });
   }
 };
+
 
 // -------------------- UPDATE TRACKING INFO --------------------
 const updateTrackingInfo = async (req, res) => {
