@@ -54,10 +54,7 @@ app.use((req, res, next) => {
 // --------------------
 // CORS configuration
 // --------------------
-// Read allowed origins from env
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',')
-  : [];
+const allowedOrigins = ['https://swiftship-ac10.onrender.com'];
 
 app.use(
   cors({
@@ -120,3 +117,4 @@ server.listen(port, () => {
     } mode`
   );
 });
+
