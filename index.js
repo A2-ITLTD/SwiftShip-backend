@@ -23,14 +23,10 @@ dbConfig();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// --------------------
 // Security & performance middlewares
+// --------------------
 app.use(helmet());
-app.use(
-  cors({
-    origin: 'https://swiftship-70l3.onrender.com',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  })
-);
 app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 
@@ -56,15 +52,43 @@ app.use((req, res, next) => {
 });
 
 // --------------------
-// API routes first
+// CORS configuration
 // --------------------
-app.use(router);
+const allowedOrigins = [
+  'https://swiftship-ac10.onrender.com', // your current frontend
+  'https://swiftship-70l3.onrender.com', // old/other frontend
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow non-browser requests
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 // --------------------
-// Serve frontend build
+// API routes first
 // --------------------
-const distPath = path.join(__dirname, 'dist');
-app.use(express.static(distPath));
+app.use('/api/v1', router);
+
+// // --------------------
+// // Serve frontend build
+// // --------------------
+// const distPath = path.join(__dirname, 'dist');
+// app.use(express.static(distPath));
+
+// // Fallback to index.html for frontend routing
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(distPath, 'index.html'));
+// });
 
 // --------------------
 // Create HTTP + Socket.IO server
@@ -72,8 +96,9 @@ app.use(express.static(distPath));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
