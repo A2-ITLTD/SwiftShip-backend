@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
     if (!authHeader) {
       return res
         .status(401)
-        .json({ error: 'Access denied. No token provided.' });
+        .json({ error: 'Please log in to track your parcel' });
     }
 
     const token = authHeader.startsWith('Bearer ')
