@@ -77,7 +77,7 @@ app.use(
 // --------------------
 // API routes first
 // --------------------
-app.use('/api/v1', router);
+app.use(router);
 
 // // --------------------
 // // Serve frontend build
