@@ -76,16 +76,6 @@ app.use(
 // --------------------
 app.use(router);
 
-// --------------------
-// Serve frontend build
-// --------------------
-const distPath = path.join(__dirname, 'dist');
-app.use(express.static(distPath));
-
-// Fallback for React Router
-app.get('/', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
 
 // --------------------
 // Create HTTP + Socket.IO server
