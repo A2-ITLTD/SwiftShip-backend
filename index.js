@@ -7,7 +7,6 @@ const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const sanitizeHtml = require('sanitize-html');
-const winston = require('winston');
 const cors = require('cors');
 const path = require('path');
 const logger = require('./Config/logger');
@@ -56,13 +55,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// --------------------
+// API routes first
+// --------------------
 app.use(router);
 
+// --------------------
+// Serve frontend build
+// --------------------
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
 
-// SPA catch-all route (for client-side routing)
-app.get('/', (req, res) => {
+// Catch-all for SPA (client-side routing)
+app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 

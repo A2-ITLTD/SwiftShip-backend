@@ -3,10 +3,17 @@ const router = express.Router();
 const apiRouter = require('./Api/Index');
 
 // ✅ Mount all API routes under /api/v1
-router.use('/api/v1', apiRouter);
+router.use(
+  '/api/v1',
+  (req, res, next) => {
+    console.log('➡️ API route hit:', req.method, req.originalUrl);
+    next();
+  },
+  apiRouter
+);
 
-// ✅ Health check route
-router.get('/api/health', (req, res) => {
+// ✅ Health check / backend test route
+router.get('/', (req, res) => {
   res.json({
     status: 'ok',
     message: '✅ SwiftShip backend is working!',
