@@ -5,14 +5,16 @@ const sanitizeInput = require('../Utils/sanitizeInput');
 // -------------------- GET TRACKING NUMBER --------------------
 const getTrackingNumber = async (req, res) => {
   try {
+  
+
+    let { orderId } = req.body;
+
     // ------------------ CHECK LOGIN ------------------
     if (!req.user) {
       return res
         .status(401)
         .json({ success: false, error: 'Please login to track your parcel' });
     }
-
-    let { orderId } = req.body;
 
     // ------------------ SANITIZE INPUT ------------------
     orderId = sanitizeInput(orderId);
