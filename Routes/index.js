@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // ✅ Mount all API routes under /api/v1
-router.use('/api/v1', (req, res) => {
+router.get('/api/v1', (req, res) => {
   res.json({
     status: 'ok',
     message: '✅ SwiftShip backend is working!',
