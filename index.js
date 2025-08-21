@@ -28,7 +28,7 @@ const port = process.env.PORT || 3000;
 app.use(helmet());
 app.use(
   cors({
-    origin:'https://swiftship-70l3.onrender.com',
+    origin: 'https://swiftship-70l3.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
@@ -55,11 +55,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-
-
-
-app.use(router);
 
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
@@ -88,12 +83,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// --------------------
-// Default route
-// --------------------
-app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'SwiftShip API is running 🚀' });
-});
+app.use(router);
 
 // --------------------
 // Start server
