@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 // --------------------
 // CORS configuration
 // --------------------
-const allowedOrigins = ['https://swiftship-ac10.onrender.com'];
+const allowedOrigins = ['https://swift.commercialtirerepairllc.com'];
 
 app.use(
   cors({
