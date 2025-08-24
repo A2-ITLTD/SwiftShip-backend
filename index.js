@@ -54,22 +54,23 @@ app.use((req, res, next) => {
 // --------------------
 // CORS configuration
 // --------------------
-const allowedOrigins = ['https://swift.commercialtirerepairllc.com'];
+const allowedOrigins = [
+  'https://swift.commercialtirerepairllc.com',
+  'http://localhost:5173',
+  'https://swiftship-ac10.onrender.com'
+];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // --------------------
 // API routes first
