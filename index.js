@@ -55,8 +55,10 @@ app.use((req, res, next) => {
 // CORS configuration
 // --------------------
 const allowedOrigins = [
-  'https://swift.commercialtirerepairllc.com'
+  'https://swift.commercialtirerepairllc.com',
+  'http://localhost:5173'
 ];
+
 
 const corsOptions = {
   origin: (origin, callback) => {
