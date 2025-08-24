@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 // CORS configuration
 // --------------------
 const allowedOrigins = [
-  'https://swift.commercialtirerepairllc.com/'
+  'https://swift.commercialtirerepairllc.com'
 ];
 
 const corsOptions = {
