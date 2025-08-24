@@ -25,11 +25,9 @@ const getTrackingNumber = async (req, res) => {
     }
 
     // ------------------ BUILD QUERY ------------------
-   const query =
+  const query =
       req.user?.role === 'user'
         ? { orderId, userId: req.user.id } 
-        : userId
-        ? { orderId, userId } 
         : { orderId }; 
 
 
