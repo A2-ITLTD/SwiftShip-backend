@@ -4,6 +4,7 @@ const router = express.Router();
 const contactController = require('../../Controllers/ContactController');
 const {
   receiveOrderNotification,
+  receiveBookingNotification,
 } = require('../../Controllers/notificationController');
 const {
   getTrackingNumber,
@@ -72,5 +73,8 @@ router.get(
   roleMiddleware(['admin']),
   adminController.getOrderById
 );
+
+// booking
+router.post('/booking', receiveBookingNotification);
 
 module.exports = router;

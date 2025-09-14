@@ -201,10 +201,41 @@ const contactMailTemplate = ({ name, email, phone, address, message }) => `
   </div>
 `;
 
+const bookingNotificationEmail = (data) => `
+  <h2>New Booking Received</h2>
+  <h3>Sender Details</h3>
+  <p>Name: ${data.senderName}</p>
+  <p>Phone: ${data.senderPhone}</p>
+  <p>Email: ${data.senderEmail}</p>
+  <p>Address Type: ${data.senderAddressType}</p>
+  <p>District/Area: ${data.senderDistrict} - ${data.senderArea}</p>
+  <p>Post Code: ${data.senderPostCode}</p>
+  <p>Address: ${data.senderAddress}</p>
+
+  <h3>Recipient Details</h3>
+  <p>Name: ${data.recipientName}</p>
+  <p>Phone: ${data.recipientPhone}</p>
+  <p>District/Area: ${data.recipientDistrict} - ${data.recipientArea}</p>
+  <p>Post Code: ${data.recipientPostCode}</p>
+  <p>Address: ${data.recipientAddress}</p>
+  <p>Instruction: ${data.recipientInstruction || 'N/A'}</p>
+  <p>Send Pickup Notification: ${data.sendPickupNotification ? 'Yes' : 'No'}</p>
+
+  <h3>Parcel Details</h3>
+  <p>Product Type: ${data.productType}</p>
+  <p>Weight: ${data.weightKg} kg</p>
+  <p>Contents: ${data.contents}</p>
+  <p>Number of Items: ${data.numberOfItems}</p>
+  <p>Packaging Service: ${data.packagingService}</p>
+  <p>Declared Value: ${data.parcelValue || 'N/A'}</p>
+  <p>Delivery Speed: ${data.deliverySpeed}</p>
+`;
+
 module.exports = {
   mailTemplate,
   otpTemplate,
   resetPassTemplate,
   orderNotificationEmail,
   contactMailTemplate,
+  bookingNotificationEmail,
 };
