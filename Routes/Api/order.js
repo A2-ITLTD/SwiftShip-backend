@@ -5,6 +5,7 @@ const contactController = require('../../Controllers/ContactController');
 const {
   receiveOrderNotification,
   receiveBookingNotification,
+  receiveBulkQuote,
 } = require('../../Controllers/notificationController');
 const {
   getTrackingNumber,
@@ -76,5 +77,6 @@ router.get(
 
 // booking
 router.post('/booking', receiveBookingNotification);
+router.post('/bulk-quote', receiveBulkQuote);
 
 module.exports = router;

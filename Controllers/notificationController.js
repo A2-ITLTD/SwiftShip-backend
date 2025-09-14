@@ -4,6 +4,7 @@ const sanitizeInput = require('../Utils/sanitizeInput');
 const {
   orderNotificationEmail,
   bookingNotificationEmail,
+  bulkQuoteEmailTemplate,
 } = require('../Utils/template');
 
 const receiveOrderNotification = async (req, res) => {
@@ -218,4 +219,100 @@ const receiveBookingNotification = async (req, res) => {
   }
 };
 
-module.exports = { receiveOrderNotification, receiveBookingNotification };
+const receiveBulkQuote = async (req, res) => {
+  try {
+    let {
+      originCountry,
+      destinationCountry,
+      category,
+      transportMethod,
+      shippingMethod,
+      currency,
+      totalValue,
+      deliveryType,
+    } = req.body;
+
+    // -------------------- SANITIZATION --------------------
+    originCountry = sanitizeInput(originCountry);
+    destinationCountry = sanitizeInput(destinationCountry);
+    category = sanitizeInput(category);
+    transportMethod = sanitizeInput(transportMethod);
+    shippingMethod = sanitizeInput(shippingMethod);
+    currency = sanitizeInput(currency);
+    totalValue = sanitizeInput(totalValue);
+    deliveryType = sanitizeInput(deliveryType);
+
+    // -------------------- VALIDATION --------------------
+    const errors = [];
+
+    if (!originCountry) errors.push('Origin Country is required.');
+    if (!destinationCountry) errors.push('Destination Country is required.');
+    if (!category) errors.push('Category is required.');
+    if (!transportMethod) errors.push('Transport Method is required.');
+    if (!shippingMethod) errors.push('Shipping Method is required.');
+    if (!currency) errors.push('Currency is required.');
+    if (!totalValue) errors.push('Total Value is required.');
+    if (totalValue && isNaN(totalValue))
+      errors.push('Total Value must be a valid number.');
+    if (!deliveryType) errors.push('Delivery Type is required.');
+
+    if (errors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        errors,
+      });
+    }
+
+    // -------------------- SEND EMAIL TO ADMIN --------------------
+    try {
+      await sendMail(
+        'soniaweba2it@gmail.com',
+        'New Bulk Quote Request - International Shipping',
+        bulkQuoteEmailTemplate,
+        {
+          originCountry,
+          destinationCountry,
+          category,
+          transportMethod,
+          shippingMethod,
+          currency,
+          totalValue,
+          deliveryType,
+          submittedAt: new Date().toLocaleString(),
+        }
+      );
+    } catch (mailErr) {
+      console.error('Error sending bulk quote email:', mailErr);
+    }
+
+    // -------------------- RESPONSE --------------------
+    return res.status(201).json({
+      success: true,
+      message:
+        'Bulk quote request submitted successfully. Our team will contact you shortly.',
+      data: {
+        originCountry,
+        destinationCountry,
+        category,
+        transportMethod,
+        shippingMethod,
+        currency,
+        totalValue: parseFloat(totalValue),
+        deliveryType,
+        submittedAt: new Date().toISOString(),
+      },
+    });
+  } catch (error) {
+    console.error('Error processing bulk quote:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error. Please try again later.',
+    });
+  }
+};
+
+module.exports = {
+  receiveOrderNotification,
+  receiveBookingNotification,
+  receiveBulkQuote,
+};
