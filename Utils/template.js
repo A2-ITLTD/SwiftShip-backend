@@ -250,7 +250,7 @@ const bulkQuoteEmailTemplate = (data) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>New Bulk Quote Request</h1>
+          <h1>New Booking Request</h1>
         </div>
         
         <div class="content">
