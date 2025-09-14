@@ -231,29 +231,78 @@ const bookingNotificationEmail = (data) => `
   <p>Delivery Speed: ${data.deliverySpeed}</p>
 `;
 
-const bulkQuoteEmailTemplate = `
-        <h2>New Bulk Quote Request Received</h2>
-        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-          <tr><th style="background: #045364; color: white; padding: 10px;" colspan="2">Shipping Route</th></tr>
-          <tr><td><strong>From Country:</strong></td><td>${originCountry}</td></tr>
-          <tr><td><strong>Destination:</strong></td><td>${destinationCountry}</td></tr>
-          
-          <tr><th style="background: #045364; color: white; padding: 10px;" colspan="2">Package Information</th></tr>
-          <tr><td><strong>Category:</strong></td><td>${category}</td></tr>
-          <tr><td><strong>Transport Method:</strong></td><td>${transportMethod}</td></tr>
-          
-          <tr><th style="background: #045364; color: white; padding: 10px;" colspan="2">Shipping Details</th></tr>
-          <tr><td><strong>Shipping Method:</strong></td><td>${shippingMethod}</td></tr>
-          <tr><td><strong>Currency:</strong></td><td>${currency}</td></tr>
-          <tr><td><strong>Total Value:</strong></td><td>${totalValue}</td></tr>
-          
-          <tr><th style="background: #045364; color: white; padding: 10px;" colspan="2">Delivery Options</th></tr>
-          <tr><td><strong>Delivery Type:</strong></td><td>${deliveryType}</td></tr>
-          
-          <tr><th style="background: #045364; color: white; padding: 10px;" colspan="2">Request Details</th></tr>
-          <tr><td><strong>Submitted At:</strong></td><td>${new Date().toLocaleString()}</td></tr>
-        </table>
+const bulkQuoteEmailTemplate = (data) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { background: #045364; color: white; padding: 20px; text-align: center; }
+        .content { background: #f9f9f9; padding: 20px; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th { background: #045364; color: white; padding: 10px; text-align: left; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        .footer { margin-top: 20px; padding: 20px; background: #eee; text-align: center; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>New Bulk Quote Request</h1>
+        </div>
+        
+        <div class="content">
+          <h2>Shipping Details</h2>
+          <table>
+            <tr><th colspan="2">Shipping Route</th></tr>
+            <tr><td><strong>From Country:</strong></td><td>${
+              data.originCountry || 'N/A'
+            }</td></tr>
+            <tr><td><strong>Destination:</strong></td><td>${
+              data.destinationCountry || 'N/A'
+            }</td></tr>
+            
+            <tr><th colspan="2">Package Information</th></tr>
+            <tr><td><strong>Category:</strong></td><td>${
+              data.category || 'N/A'
+            }</td></tr>
+            <tr><td><strong>Transport Method:</strong></td><td>${
+              data.transportMethod || 'N/A'
+            }</td></tr>
+            
+            <tr><th colspan="2">Shipping Details</th></tr>
+            <tr><td><strong>Shipping Method:</strong></td><td>${
+              data.shippingMethod || 'N/A'
+            }</td></tr>
+            <tr><td><strong>Currency:</strong></td><td>${
+              data.currency || 'N/A'
+            }</td></tr>
+            <tr><td><strong>Total Value:</strong></td><td>${
+              data.totalValue || 'N/A'
+            }</td></tr>
+            
+            <tr><th colspan="2">Delivery Options</th></tr>
+            <tr><td><strong>Delivery Type:</strong></td><td>${
+              data.deliveryType || 'N/A'
+            }</td></tr>
+            
+            <tr><th colspan="2">Request Details</th></tr>
+            <tr><td><strong>Submitted At:</strong></td><td>${
+              data.submittedAt || new Date().toLocaleString()
+            }</td></tr>
+          </table>
+        </div>
+        
+        <div class="footer">
+          <p>This is an automated notification. Please do not reply to this email.</p>
+        </div>
+      </div>
+    </body>
+    </html>
   `;
+};
 
 module.exports = {
   mailTemplate,

@@ -265,21 +265,25 @@ const receiveBulkQuote = async (req, res) => {
 
     // -------------------- SEND EMAIL TO ADMIN --------------------
     try {
+      const emailData = {
+        originCountry,
+        destinationCountry,
+        category,
+        transportMethod,
+        shippingMethod,
+        currency,
+        totalValue,
+        deliveryType,
+        submittedAt: new Date().toLocaleString(),
+      };
+
+      const emailHtml = bulkQuoteEmailTemplate(emailData);
+
       await sendMail(
         'soniaweba2it@gmail.com',
         'New Bulk Quote Request - International Shipping',
-        bulkQuoteEmailTemplate,
-        {
-          originCountry,
-          destinationCountry,
-          category,
-          transportMethod,
-          shippingMethod,
-          currency,
-          totalValue,
-          deliveryType,
-          submittedAt: new Date().toLocaleString(),
-        }
+        emailHtml,
+        emailData
       );
     } catch (mailErr) {
       console.error('Error sending bulk quote email:', mailErr);
