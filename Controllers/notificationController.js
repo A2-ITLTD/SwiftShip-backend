@@ -211,7 +211,6 @@ const receiveBookingNotification = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: 'Booking saved and admin notified via email.',
-      data: booking,
     });
   } catch (error) {
     console.error('Error processing booking:', error);
