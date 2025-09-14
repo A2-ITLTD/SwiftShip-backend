@@ -57,9 +57,9 @@ app.use((req, res, next) => {
 const allowedOrigins = [
   'https://swift.commercialtirerepairllc.com',
   'http://localhost:5173',
-  'https://swiftship-ac10.onrender.com'
+  'https://swiftship-ac10.onrender.com',
+  'https://cargologisticscompany.com',
 ];
-
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -77,7 +77,6 @@ app.use(cors(corsOptions));
 // API routes first
 // --------------------
 app.use(router);
-
 
 // --------------------
 // Create HTTP + Socket.IO server
@@ -109,4 +108,3 @@ server.listen(port, () => {
     } mode`
   );
 });
-
